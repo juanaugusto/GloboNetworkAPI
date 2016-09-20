@@ -8,6 +8,22 @@ from networkapi.test.test_case import NetworkApiTestCase
 
 log = logging.getLogger(__name__)
 
+# Overriding the standard Python dict sort
+
+
+class SortedListEncoder(json.JSONEncoder):
+
+    def encode(self, obj):
+        def sort_lists(item):
+            if isinstance(item, list):
+                return sorted(sort_lists(i) for i in item)
+            elif isinstance(item, dict):
+                return {k: sort_lists(v) for k, v in item.items()}
+            else:
+                return item
+
+        return super(SortedListEncoder, self).encode(sort_lists(obj))
+
 
 class PoolTestV3Case(NetworkApiTestCase):
 
@@ -18,6 +34,49 @@ class PoolTestV3Case(NetworkApiTestCase):
 
     def tearDown(self):
         pass
+
+    def execute_some_post_detailed_verify_success(self, name_file):
+
+        # delete
+        self.client.delete('/api/v3/pool/1/', HTTP_AUTHORIZATION=self.get_http_authorization('test'))
+
+        # try to get datas
+        response = self.client.get('/api/v3/pool/details/1/', content_type="application/json", HTTP_AUTHORIZATION=self.get_http_authorization('test'))
+
+        # test if does not exist data inserted
+        self.assertEqual(500, response.status_code, "Status code should be 500 and was %s" % response.status_code)
+
+        # insert
+        response = self.client.post('/api/v3/pool/', data=json.dumps(self.load_json_file(name_file)),
+                                    content_type="application/json",
+                                    HTTP_AUTHORIZATION=self.get_http_authorization('test'))
+
+        self.assertEqual(201, response.status_code, "Status code should be 201 and was %s" % response.status_code)
+
+        data_to_insert = self.load_json_file(name_file)
+        # insert Administradores group into json
+        data_to_insert['server_pools'][0]["groups_permissions"].append({"read": True,
+                                                                        "write": True,
+                                                                        "change_config": True,
+                                                                        "group": 1,
+                                                                        "delete": True})
+
+        # get data inserted
+        response = self.client.get('/api/v3/pool/details/1/', content_type="application/json", HTTP_AUTHORIZATION=self.get_http_authorization('test'))
+
+        data = response.data
+        del data['server_pools'][0]['id']
+        del data['server_pools'][0]["servicedownaction"]["type"]
+        data['server_pools'][0]["environment"] = data['server_pools'][0]["environment"]["id"]
+
+        for i in range(0, len(data['server_pools'][0]["groups_permissions"])):
+            data['server_pools'][0]["groups_permissions"][i]["group"] = data['server_pools'][0]["groups_permissions"][i]["group"]["id"]
+
+        # test if data were inserted
+        self.assertEqual(200, response.status_code, "Status code should be 200 and was %s" % response.status_code)
+
+        # test if inserted data is equals to the data that is being received
+        self.assertEqual(json.dumps(data_to_insert, sort_keys=True, cls=SortedListEncoder), json.dumps(data, sort_keys=True, cls=SortedListEncoder), "jsons should same")
 
     def execute_some_put_verify_error(self, name_file):
         # update
@@ -66,7 +125,8 @@ class PoolTestV3Case(NetworkApiTestCase):
         )
         self.assertEqual(200, response.status_code, "Status code should be 200 and was %s" % response.status_code)
 
-    def execute_some_post_verify_error(self, name_file):
+    def execute_some_post_verify_error(self, name_file, expected_insert_error_code=400):
+
         # delete
         self.client.delete(
             '/api/v3/pool/1/',
@@ -78,7 +138,7 @@ class PoolTestV3Case(NetworkApiTestCase):
             data=json.dumps(self.load_json_file(name_file)),
             content_type="application/json",
             HTTP_AUTHORIZATION=self.get_http_authorization('test'))
-        self.assertEqual(400, response.status_code, "Status code should be 400 and was %s" % response.status_code)
+        self.assertEqual(expected_insert_error_code, response.status_code, "Status code should be %s and was %s" % (expected_insert_error_code, response.status_code))
 
         # try to get datas
         response = self.client.get(
@@ -129,6 +189,18 @@ class PoolTestV3Case(NetworkApiTestCase):
             "jsons should same"
         )
         self.assertEqual(200, response.status_code, "Status code should be 200 and was %s" % response.status_code)
+
+    def test_put_valid_file_with_one_group_user(self):
+        self.execute_some_put_verify_success(
+            'api_pools/tests/json/put/test_pool_put_valid_file_with_one_group_user.json')
+
+    def test_put_valid_file_with_two_group_user(self):
+        self.execute_some_put_verify_success(
+            'api_pools/tests/json/put/test_pool_put_valid_file_with_two_group_user.json')
+
+    def test_put_invalid_file_with_two_equal_group_user(self):
+        self.execute_some_put_verify_error(
+            'api_pools/tests/json/put/test_pool_put_invalid_file_with_two_equal_group_user.json')
 
     def test_put_valid_file(self):
         """ test_put_valid_file"""
@@ -291,6 +363,18 @@ class PoolTestV3Case(NetworkApiTestCase):
     def test_post_negative_id_servicedownaction(self):
         """  test_post_negative_id_servicedownaction"""
         self.execute_some_post_verify_error('api_pools/tests/json/post/test_pool_post_negative_id_servicedownaction.json')
+
+    def test_post_valid_file_with_one_group_user(self):
+        self.execute_some_post_detailed_verify_success(
+            'api_pools/tests/json/post/test_pool_post_valid_file_with_one_group_user.json')
+
+    def test_post_valid_file_with_two_group_user(self):
+        self.execute_some_post_detailed_verify_success(
+            'api_pools/tests/json/post/test_pool_post_valid_file_with_two_group_user.json')
+
+    def test_post_invalid_file_with_two_equal_group_user(self):
+        self.execute_some_post_verify_error(
+            'api_pools/tests/json/post/test_pool_post_invalid_file_with_two_equal_group_user.json', 500)
 
     def test_valid_post_after_equals_valid_put(self):
         """ test_valid_post_after_equals_valid_put"""
