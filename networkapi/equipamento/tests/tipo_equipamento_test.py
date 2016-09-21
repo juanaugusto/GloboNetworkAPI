@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
+from __future__ import absolute_import
+from __future__ import unicode_literals
 
 import logging
-import mock
 
-from django.db import IntegrityError
-from django.test import TestCase
 from django.test.client import Client
 
 from networkapi.test.test_case import NetworkApiTestCase
-from networkapi.usuario.tests import factory
+# import mock
+# from django.db import IntegrityError
+# from django.test import TestCase
+# from networkapi.usuario.tests import factory
 
 
 LOG = logging.getLogger(__name__)
@@ -40,7 +41,7 @@ class TipoEquipamentoTestCase(NetworkApiTestCase):
                                     HTTP_AUTHORIZATION=self.get_http_authorization('test'))
 
         LOG.debug(response)
-        expected_response = '<?xml version="1.0" encoding="UTF-8"?><networkapi versao="1.0"><equipment_type><id>2</id></equipment_type></networkapi>'
+        expected_response = '<?xml version="1.0" encoding="UTF-8"?><networkapi versao="1.0"><equipment_type><id>3</id></equipment_type></networkapi>'
         # Check that the response is 200 OK.
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content, expected_response)
