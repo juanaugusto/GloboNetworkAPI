@@ -16,11 +16,14 @@
 			"healthcheck_expect": "ok",
 			"destination": "*:*"
 		},
+		"permissions" : {
+			"replace": true
+		},
 		"groups_permissions": [{
 			"read": true,
 			"write": true,
 			"change_config": true,
-			"group": 10,
+			"group": 1,
 			"delete": true
 		}, {
 			"read": true,

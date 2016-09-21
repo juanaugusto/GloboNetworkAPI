@@ -1,6 +1,5 @@
 {
 	"server_pools": [{
-		"id": 1,
 		"identifier": "vm-testeupdate",
 		"default_port": 801,
 		"environment": 1,
@@ -16,14 +15,17 @@
 			"healthcheck_expect": "ok",
 			"destination": "*:*"
 		},
-		"permissions" : {
-			"replace": true
-		},
 		"groups_permissions": [{
 			"read": true,
 			"write": true,
 			"change_config": true,
-			"group": 1,
+			"group": 10,
+			"delete": true
+		}, {
+			"read": true,
+			"write": true,
+			"change_config": true,
+			"group": 5,
 			"delete": true
 		}],
 		"default_limit": 1001,

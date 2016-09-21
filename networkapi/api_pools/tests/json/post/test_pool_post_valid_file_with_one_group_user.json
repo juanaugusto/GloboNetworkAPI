@@ -19,7 +19,7 @@
 			"read": true,
 			"write": true,
 			"change_config": true,
-			"group": 10,
+			"group": 1,
 			"delete": true
 		}],
 		"default_limit": 1001,
