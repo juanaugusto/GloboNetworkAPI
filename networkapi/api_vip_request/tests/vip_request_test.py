@@ -17,27 +17,27 @@ class VipRequestTestV3Case(NetworkApiTestCase):
     def tearDown(self):
         pass
 
-    def vip_request_post_valid_file_with_one_group_user_test(self):
+    def wtest__post_valid_file_with_one_group_user_(self):
         self.execute_some_post_verify_success(
             'api_vip_request/tests/json/post/test_vip_request_post_valid_file_with_one_group_user.json')
 
-    def vip_request_post_valid_file_with_two_group_user_test(self):
+    def wtest__post_valid_file_with_two_group_user_(self):
         self.execute_some_post_verify_success(
             'api_vip_request/tests/json/post/testvip_request_post_valid_file_with_two_group_user.json')
 
-    def vip_request_post_invalid_file_with_two_equal_group_user_test(self):
+    def wtest__post_invalid_file_with_two_equal_group_user_(self):
         self.execute_some_post_verify_error(
             'api_vip_request/tests/json/post/test_vip_request_post_invalid_file_with_two_equal_group_user.json')
 
-    def vip_request_put_valid_file_with_one_group_user_test(self):
+    def wtest__put_valid_file_with_one_group_user_(self):
         self.execute_some_put_verify_success(
             'api_vip_request/tests/json/put/test_vip_request_put_valid_file_with_one_group_user.json')
 
-    def vip_request_put_valid_file_with_two_group_user_test(self):
+    def wtest__put_valid_file_with_two_group_user_(self):
         self.execute_some_put_verify_success(
             'api_vip_request/tests/json/put/test_vip_request_put_valid_file_with_two_group_user.json')
 
-    def vip_request_put_invalid_file_with_two_equal_group_user_test(self):
+    def wtest__put_invalid_file_with_two_equal_group_user_(self):
         self.execute_some_put_verify_error(
             'api_vip_request/tests/json/put/test_vip_request_put_invalid_file_with_two_equal_group_user.json')
 
@@ -98,21 +98,6 @@ class VipRequestTestV3Case(NetworkApiTestCase):
         self.assertEqual(500, response.status_code, "Status code should be 500 and was %s" % response.status_code)
 
     def execute_some_post_verify_success(self, name_file):
-
-        # delete
-        self.client.delete(
-            '/api/v3/vip-request/1/',
-            HTTP_AUTHORIZATION=self.get_http_authorization('test'))
-
-        # try to get datas
-        response = self.client.get(
-            '/api/v3/vip-request/1/',
-            content_type="application/json",
-            HTTP_AUTHORIZATION=self.get_http_authorization('test'))
-
-        # test if does not exist data inserted
-        self.assertEqual(500, response.status_code, "Status code should be 500 and was %s" % response.status_code)
-
         # insert
         response = self.client.post(
             '/api/v3/vip-request/',
@@ -123,7 +108,7 @@ class VipRequestTestV3Case(NetworkApiTestCase):
 
         # get data inserted
         response = self.client.get(
-            '/api/v3/vip-request/1/',
+            '/api/v3/vip-request/{0}/'.format(response.data[0]['id']),
             content_type="application/json",
             HTTP_AUTHORIZATION=self.get_http_authorization('test'))
 
@@ -140,63 +125,63 @@ class VipRequestTestV3Case(NetworkApiTestCase):
         self.assertEqual(200, response.status_code, "Status code should be 200 and was %s" % response.status_code)
 
         # def test_get_success(self):
-    #     """ test_get_success"""
+        #     """ test_get_success"""
 
-    #     import time
+        #     import time
 
-    #     time.sleep(20)
-    #     response = self.client.get(
-    #         '/api/v3/vip-request/1/',
-    #         content_type="application/json",
-    #         HTTP_AUTHORIZATION=self.get_http_authorization('test'))
-    #     self.assertEqual(
-    #         self.load_json_file('api_vip_request/tests/json/test_vip_request_get.json'),
-    #         response.data
-    #     )
-    #     self.assertEqual(200, response.status_code, "Status code should be 200 and was %s" % response.status_code)
+        #     time.sleep(20)
+        #     response = self.client.get(
+        #         '/api/v3/vip-request/1/',
+        #         content_type="application/json",
+        #         HTTP_AUTHORIZATION=self.get_http_authorization('test'))
+        #     self.assertEqual(
+        #         self.load_json_file('api_vip_request/tests/json/test_vip_request_get.json'),
+        #         response.data
+        #     )
+        #     self.assertEqual(200, response.status_code, "Status code should be 200 and was %s" % response.status_code)
 
-    # def test_get_details_success(self):
-    #     """ test_get_details_success"""
-    #     response = self.client.get(
-    #         '/api/v3/pool/details/1/',
-    #         content_type="application/json",
-    #         HTTP_AUTHORIZATION=self.get_http_authorization('test'))
-    #     log.info(response.data)
-    #     self.assertEqual(
-    #         self.load_json_file('api_pools/tests/json/test_pool_get_details.json'),
-    #         response.data
-    #     )
-    #     self.assertEqual(200, response.status_code, "Status code should be 200 and was %s" % response.status_code)
+        # def test_get_details_success(self):
+        #     """ test_get_details_success"""
+        #     response = self.client.get(
+        #         '/api/v3/pool/details/1/',
+        #         content_type="application/json",
+        #         HTTP_AUTHORIZATION=self.get_http_authorization('test'))
+        #     log.info(response.data)
+        #     self.assertEqual(
+        #         self.load_json_file('api_pools/tests/json/test_pool_get_details.json'),
+        #         response.data
+        #     )
+        #     self.assertEqual(200, response.status_code, "Status code should be 200 and was %s" % response.status_code)
 
-    # def test_put_success(self):
-    #     """ test_put_success"""
-    #     # update
-    #     response = self.client.put(
-    #         '/api/v3/pool/1/',
-    #         data=json.dumps(self.load_json_file('api_pools/tests/json/test_pool_put.json')),
-    #         content_type="application/json",
-    #         HTTP_AUTHORIZATION=self.get_http_authorization('test'))
-    #     self.assertEqual(200, response.status_code, "Status code should be 200 and was %s" % response.status_code)
+        # def test_put_success(self):
+        #     """ test_put_success"""
+        #     # update
+        #     response = self.client.put(
+        #         '/api/v3/pool/1/',
+        #         data=json.dumps(self.load_json_file('api_pools/tests/json/test_pool_put.json')),
+        #         content_type="application/json",
+        #         HTTP_AUTHORIZATION=self.get_http_authorization('test'))
+        #     self.assertEqual(200, response.status_code, "Status code should be 200 and was %s" % response.status_code)
 
-    #     # get datas updated
-    #     response = self.client.get(
-    #         '/api/v3/pool/1/',
-    #         content_type="application/json",
-    #         HTTP_AUTHORIZATION=self.get_http_authorization('test'))
+        #     # get datas updated
+        #     response = self.client.get(
+        #         '/api/v3/pool/1/',
+        #         content_type="application/json",
+        #         HTTP_AUTHORIZATION=self.get_http_authorization('test'))
 
-    #     # test if datas were updated
-    #     self.assertEqual(
-    #         self.load_json_file('api_pools/tests/json/test_pool_put.json'),
-    #         response.data
-    #     )
-    #     self.assertEqual(200, response.status_code, "Status code should be 200 and was %s" % response.status_code)
+        #     # test if datas were updated
+        #     self.assertEqual(
+        #         self.load_json_file('api_pools/tests/json/test_pool_put.json'),
+        #         response.data
+        #     )
+        #     self.assertEqual(200, response.status_code, "Status code should be 200 and was %s" % response.status_code)
 
-    # def test_post_success(self):
-    #     """ test_post_success"""
-    #     response = self.client.post(
-    #         '/api/v3/pool/',
-    #         data=json.dumps(self.load_json_file('api_pools/tests/json/test_pool_post.json')),
-    #         content_type="application/json",
-    #         HTTP_AUTHORIZATION=self.get_http_authorization('test'))
+        # def test_post_success(self):
+        #     """ test_post_success"""
+        #     response = self.client.post(
+        #         '/api/v3/pool/',
+        #         data=json.dumps(self.load_json_file('api_pools/tests/json/test_pool_post.json')),
+        #         content_type="application/json",
+        #         HTTP_AUTHORIZATION=self.get_http_authorization('test'))
 
-    #     self.assertEqual(201, response.status_code, "Status code should be 201 and was %s" % response.status_code)
+        #     self.assertEqual(201, response.status_code, "Status code should be 201 and was %s" % response.status_code)
