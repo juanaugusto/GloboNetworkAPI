@@ -3,14 +3,91 @@ import json
 import logging
 
 from django.test.client import Client
+from mock import patch
 
+from networkapi.api_pools.facade.v3 import deploy as facade_pool_deploy
+from networkapi.api_pools.tests.pool_v3_deploy_test import MockPlugin
 from networkapi.api_pools.tests.sorted_list_encoder_test import SortedListEncoder
 from networkapi.test.test_case import NetworkApiTestCase
+from networkapi.usuario.models import Usuario
 
 log = logging.getLogger(__name__)
 
 
-class PoolTestPostV3Case(NetworkApiTestCase):
+class PoolTestPostDeployV3Case(NetworkApiTestCase):
+    maxDiff = None
+
+    def setUp(self):
+        self.client = Client()
+        self.user = Usuario(id=1, nome='test')
+
+    def tearDown(self):
+        pass
+
+    @patch('networkapi.plugins.factory.PluginFactory.factory')
+    def test_deploy_pool_not_deployed_success(self, test_patch):
+        """
+        It tests if the deploy of not deployed pool returns success suposing that equipments will act in the right way always
+        """
+
+        mock = MockPlugin()
+        mock.status(True)
+        test_patch.return_value = mock
+
+        # deploy pool id=6 already present in test database
+        response = self.client.post(
+            '/api/v3/pool/deploy/6/',
+            content_type="application/json",
+            HTTP_AUTHORIZATION=self.get_http_authorization('test'))
+        log.info(response.data)
+        self.assertEqual(200, response.status_code,
+                         "Status code should be 200 and was %s" % response.status_code)
+
+    # test will not ne executed by jenkins
+    @patch('networkapi.plugins.factory.PluginFactory.factory')
+    def wtest_deploy_pool_deployed_error(self, test_patch):
+        """
+        It tests if the deploy of a deployed pool returns fail suposing that equipments will act in the right way always
+        """
+        # insert
+        response = self.client.post(
+            '/api/v3/pool/',
+            data=json.dumps(self.load_json_file('api_pools/tests/json/post/test_pool_post_valid_file_with_one_group_user.json')),
+            content_type="application/json",
+            HTTP_AUTHORIZATION=self.get_http_authorization('test'))
+
+        mock = MockPlugin()
+        mock.status(True)
+        test_patch.return_value = mock
+
+        id_gerado = response.data[0]['id']
+        # deploy pool id=7 already present in test database
+        response = self.client.post(
+            '/api/v3/pool/deploy/{0}/'.format(id_gerado),
+            content_type="application/json",
+            HTTP_AUTHORIZATION=self.get_http_authorization('test'))
+        print id_gerado
+        print (json.dumps(response.data, indent=4, sort_keys=True, cls=SortedListEncoder))
+
+        response = self.client.get(
+            '/api/v3/pool/details/{0}/'.format(id_gerado),
+            content_type="application/json",
+            HTTP_AUTHORIZATION=self.get_http_authorization('test'))
+
+        mock = MockPlugin()
+        mock.status(True)
+        test_patch.return_value = mock
+
+        response = self.client.post(
+            '/api/v3/pool/deploy/' + str(id_gerado) + '/',
+            content_type="application/json",
+            HTTP_AUTHORIZATION=self.get_http_authorization('test'))
+        print (json.dumps(response.data, indent=4, sort_keys=True, cls=SortedListEncoder))
+        self.assertEqual(400, response.status_code,
+                         "Status code should be 400 and was %s" % response.status_code)
+
+
+class PoolTestPostNotDeployV3Case(NetworkApiTestCase):
     maxDiff = None
 
     def setUp(self):

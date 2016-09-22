@@ -17,27 +17,27 @@ class VipRequestTestV3Case(NetworkApiTestCase):
     def tearDown(self):
         pass
 
-    def test_vip_request_post_valid_file_with_one_group_user(self):
+    def vip_request_post_valid_file_with_one_group_user_test(self):
         self.execute_some_post_verify_success(
             'api_vip_request/tests/json/post/test_vip_request_post_valid_file_with_one_group_user.json')
 
-    def test_vip_request_post_valid_file_with_two_group_user(self):
+    def vip_request_post_valid_file_with_two_group_user_test(self):
         self.execute_some_post_verify_success(
-            'api_vip_request/tests/json/post/test_vip_request_post_valid_file_with_two_group_user.json')
+            'api_vip_request/tests/json/post/testvip_request_post_valid_file_with_two_group_user.json')
 
-    def test_vip_request_post_invalid_file_with_two_equal_group_user(self):
+    def vip_request_post_invalid_file_with_two_equal_group_user_test(self):
         self.execute_some_post_verify_error(
             'api_vip_request/tests/json/post/test_vip_request_post_invalid_file_with_two_equal_group_user.json')
 
-    def test_vip_request_put_valid_file_with_one_group_user(self):
+    def vip_request_put_valid_file_with_one_group_user_test(self):
         self.execute_some_put_verify_success(
             'api_vip_request/tests/json/put/test_vip_request_put_valid_file_with_one_group_user.json')
 
-    def test_vip_request_put_valid_file_with_two_group_user(self):
+    def vip_request_put_valid_file_with_two_group_user_test(self):
         self.execute_some_put_verify_success(
             'api_vip_request/tests/json/put/test_vip_request_put_valid_file_with_two_group_user.json')
 
-    def test_vip_request_put_invalid_file_with_two_equal_group_user(self):
+    def vip_request_put_invalid_file_with_two_equal_group_user_test(self):
         self.execute_some_put_verify_error(
             'api_vip_request/tests/json/put/test_vip_request_put_invalid_file_with_two_equal_group_user.json')
 
