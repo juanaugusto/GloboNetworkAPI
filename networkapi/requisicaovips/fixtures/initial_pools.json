@@ -14,45 +14,73 @@
     }
   },
   {
-    "pk": 5,
-    "model": "requisicaovips.serverpool",
-    "fields": {
-      "identifier": "vm-teste2",
-      "healthcheck": 1,
-      "servicedownaction": 5,
-      "default_port": 80,
-      "default_limit": 100,
-      "pool_created": "True",
-      "environment": 1,
-      "lb_method": "least-conn"
+  "pk": 5,
+  "model": "requisicaovips.serverpool",
+  "fields": {
+    "identifier": "vm-teste-5",
+    "healthcheck": 1,
+    "servicedownaction": 5,
+    "default_port": 80,
+    "default_limit": 100,
+    "pool_created": "True",
+    "environment": 1,
+    "lb_method": "least-conn"
     }
   },
   {
-    "pk": 6,
-    "model": "requisicaovips.serverpool",
-    "fields": {
-      "identifier": "vm-teste-juan1",
-      "default_port": 801,
-      "environment": 1,
-      "servicedownaction": 5,
-      "lb_method": "round-robin",
-      "healthcheck": 1,
-      "default_limit": 1001,
-      "pool_created": false
+  "pk": 6,
+  "model": "requisicaovips.serverpool",
+  "fields": {
+    "identifier": "vm-teste-6",
+    "healthcheck": 1,
+    "servicedownaction": 5,
+    "default_port": 80,
+    "default_limit": 100,
+    "pool_created": "True",
+    "environment": 1,
+    "lb_method": "least-conn"
     }
   },
   {
-    "pk": 7,
-    "model": "requisicaovips.serverpool",
-    "fields": {
-      "identifier": "vm-teste-juan2",
-      "default_port": 801,
-      "environment": 1,
-      "servicedownaction": 5,
-      "lb_method": "round-robin",
-      "healthcheck": 1,
-      "default_limit": 1001,
-      "pool_created": true
+  "pk": 7,
+  "model": "requisicaovips.serverpool",
+  "fields": {
+    "identifier": "vm-teste-7",
+    "healthcheck": 1,
+    "servicedownaction": 5,
+    "default_port": 80,
+    "default_limit": 100,
+    "pool_created": "True",
+    "environment": 1,
+    "lb_method": "least-conn"
+    }
+  },
+  {
+  "pk": 8,
+  "model": "requisicaovips.serverpool",
+  "fields": {
+    "identifier": "vm-teste-8",
+    "healthcheck": 1,
+    "servicedownaction": 5,
+    "default_port": 80,
+    "default_limit": 100,
+    "pool_created": "False",
+    "environment": 1,
+    "lb_method": "least-conn"
+    }
+  },
+  {
+  "pk": 9,
+  "model": "requisicaovips.serverpool",
+  "fields": {
+    "identifier": "vm-teste-9",
+    "healthcheck": 1,
+    "servicedownaction": 5,
+    "default_port": 80,
+    "default_limit": 100,
+    "pool_created": "False",
+    "environment": 1,
+    "lb_method": "least-conn"
     }
   }
 ]

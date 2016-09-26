@@ -1,45 +1,56 @@
 {
-	"vips": [{
-		"business": "test_neg_api",
-		"options": {
-			"cache_group": 1,
-			"traffic_return": 12,
-			"persistence": 6,
-			"timeout": 14
-		},
-		"name": "viptest",
-		"service": "test_serv_api",
-		"ipv6": null,
-		"ports": [{
-			"pools": [{
-				"order": null,
-				"l7_value": null,
-				"l7_rule": 60,
-				"id": null,
-				"server_pool": 15122
-			}],
-			"options": {
-				"l4_protocol": 57,
-				"l7_protocol": 54
-			},
-			"id": null,
-			"port": 80
-		}],
-		"environmentvip": 23,
-		"groups_permissions": [{
-			"read": true,
-			"write": true,
-			"change_config": true,
-			"group": 10,
-			"delete": true
-		},{
-			"read": true,
-			"write": true,
-			"change_config": true,
-			"group": 5,
-			"delete": true
-		}],
-		"id": null,
-		"ipv4": 115066
-	}]
+  "vips": [
+    {
+      "business": "test_neg_api",
+      "options": {
+        "cache_group": 1,
+        "traffic_return": 12,
+        "persistence": 6,
+        "timeout": 14
+      },
+      "name": "viptest",
+      "service": "test_serv_api",
+      "ipv6": null,
+      "ports": [
+        {
+          "pools": [
+            {
+              "order": null,
+              "l7_value": null,
+              "l7_rule": 65,
+              "id": null,
+              "server_pool": 1
+            }
+          ],
+          "options": {
+            "l4_protocol": 57,
+            "l7_protocol": 54
+          },
+          "id": null,
+          "port": 80
+        }
+      ],
+      "environmentvip": 1,
+      "groups_permissions": [
+        {
+          "read": true,
+          "write": true,
+          "change_config": true,
+          "group": 10,
+          "delete": true
+        },
+        {
+          "read": true,
+          "write": true,
+          "change_config": true,
+          "group": 9,
+          "delete": true
+        }
+      ],
+      "permissions": {
+        "replace": true
+      },
+      "ipv4": 2
+    }
+  ]
 }

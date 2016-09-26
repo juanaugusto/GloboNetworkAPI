@@ -10,6 +10,5 @@ from networkapi.api_equipment import views
 urlpatterns = patterns(
     '',
     url(r'^equipment/get_routers_by_environment/(?P<env_id>\d+)/$', views.EquipmentRoutersView.as_view()),  # TODO doc
-
-    url(r'^v3/equipment/environment/(?P<env_id>\d+)/$', views.EquipmentEnvView.as_view()),  # TODO doc GET
+    url(r'^v3/equipment/$', views.EquipmentView.as_view()),  # GET
 )

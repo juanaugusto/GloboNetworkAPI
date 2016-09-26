@@ -1,0 +1,66 @@
+[
+  {
+  "pk": 1,
+  "model": "requisicaovips.optionvipenvironmentvip",
+  "fields": {
+    "option": 1,
+    "environment": 1
+    }
+  },
+  {
+  "pk": 2,
+  "model": "requisicaovips.optionvipenvironmentvip",
+  "fields": {
+    "option": 1,
+    "environment": 2
+    }
+  },
+  {
+  "pk": 3,
+  "model": "requisicaovips.optionvipenvironmentvip",
+  "fields": {
+    "option": 12,
+    "environment": 1
+    }
+  },
+  {
+  "pk": 4,
+  "model": "requisicaovips.optionvipenvironmentvip",
+  "fields": {
+    "option": 6,
+    "environment": 1
+    }
+  },
+  {
+  "pk": 5,
+  "model": "requisicaovips.optionvipenvironmentvip",
+  "fields": {
+    "option": 14,
+    "environment": 1
+    }
+  },
+  {
+  "pk": 6,
+  "model": "requisicaovips.optionvipenvironmentvip",
+  "fields": {
+    "option": 57,
+    "environment": 1
+    }
+  },
+  {
+  "pk": 7,
+  "model": "requisicaovips.optionvipenvironmentvip",
+  "fields": {
+    "option": 54,
+    "environment": 1
+    }
+  },
+  {
+  "pk": 8,
+  "model": "requisicaovips.optionvipenvironmentvip",
+  "fields": {
+    "option": 65,
+    "environment": 1
+    }
+  }
+]
