@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -41,7 +41,6 @@ def save_variable(name, value, description):
     except Exception, e:
         log.info("Erro inserindo variavel: %s" % (e))
         raise Exception("Erro inserindo variavel: %s" % (e))
-
     return var
 
 

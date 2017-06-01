@@ -1,5 +1,4 @@
-# -*- coding:utf-8 -*-
-
+# -*- coding: utf-8 -*-
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -32,6 +31,7 @@ from networkapi.interface.models import Interface
 from networkapi.ip.models import IpEquipamento
 from networkapi.rack.models import Rack, Datacenter, DatacenterRooms
 from networkapi.api_rack import exceptions, autoprovision
+
 
 
 log = logging.getLogger(__name__)
@@ -596,6 +596,7 @@ def api_foreman(rack):
 # ################################################### old
 def save_rack(rack_dict):
 
+
     rack = Rack()
 
     rack.nome = rack_dict.get('name')
@@ -610,6 +611,7 @@ def save_rack(rack_dict):
     if not rack.nome:
         raise exceptions.InvalidInputException("O nome do Rack não foi informado.")
     if Rack.objects.filter(nome__iexact=rack.nome):
+
         raise exceptions.RackNameDuplicatedError()
     if Rack.objects.filter(numero__iexact=rack.numero):
         raise exceptions.RackNumberDuplicatedValueError()
@@ -624,6 +626,7 @@ def save_rack(rack_dict):
     rack.id_sw1 = Equipamento.get_by_pk(int(id_sw1))
     rack.id_sw2 = Equipamento.get_by_pk(int(id_sw2))
     rack.id_ilo = Equipamento.get_by_pk(int(id_sw3))
+
 
     rack.save()
     return rack
@@ -656,3 +659,4 @@ def available_rack_number(request):
             return Response(data, status=status.HTTP_200_OK)
 
     return Response(data, status=status.HTTP_200_OK)
+
