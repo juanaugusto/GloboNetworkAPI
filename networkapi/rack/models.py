@@ -14,10 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import with_statement
+
 import logging
 
 
-from __future__ import with_statement
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 import logging
