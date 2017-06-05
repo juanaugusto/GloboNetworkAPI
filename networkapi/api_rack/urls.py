@@ -4,7 +4,8 @@ from __future__ import absolute_import
 from django.conf.urls import patterns, url
 from networkapi.api_rack import views as rack_views
 from networkapi.api_rack import facade as rack_facade
-
+from networkapi.api_rack.views import RackDeployView
+from networkapi.api_rack.views import RackView
 
 urlpatterns = patterns('',
     url(r'^rack/(?P<rack_id>\d+)/equipments/$', rack_views.RackDeployView.as_view()),
@@ -19,3 +20,4 @@ urlpatterns = patterns('',
     url(r'^dcrooms/(?P<fabric_id>\d+)/$', rack_views.FabricView.as_view()),
 
 )
+

@@ -1,5 +1,4 @@
-# -*- coding:utf-8 -*-
-
+# -*- coding: utf-8 -*-
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -33,9 +32,7 @@ from networkapi.ip.models import IpEquipamento
 from networkapi.rack.models import Rack, Datacenter, DatacenterRooms
 from networkapi.api_rack import exceptions, autoprovision
 
-
 log = logging.getLogger(__name__)
-
 
 def save_dc(dc_dict):
 
