@@ -23,8 +23,8 @@ from django.db import models
 from networkapi.ambiente.models import Ambiente
 from networkapi.ambiente.models import AmbienteError
 from networkapi.equipamento.models import Equipamento
-from networkapi.models.BaseModel import BaseModel
 
+from networkapi.models.BaseModel import BaseModel
 
 class RackError(Exception):
 
@@ -266,9 +266,9 @@ class Rack(BaseModel):
             raise Exception ('Já existe um rack com o nome %s na sala %s.' % (self.nome, self.dcroom.name))
 
         try:
-            self.id_sw1 = Equipamento.get_by_pk(int(id_sw1)) if self.id_sw1 is int  else self.id_sw1
-            self.id_sw2 = Equipamento.get_by_pk(int(id_sw2)) if self.id_sw2 is int else self.id_sw2
-            self.id_ilo = Equipamento.get_by_pk(int(id_sw3)) if self.id_sw3 is int else self.id_sw3
+            self.id_sw1 = networkapi.equipamento.models.Equipamento.get_by_pk(int(id_sw1)) if self.id_sw1 is int  else self.id_sw1
+            self.id_sw2 = networkapi.equipamento.models.Equipamento.get_by_pk(int(id_sw2)) if self.id_sw2 is int else self.id_sw2
+            self.id_ilo = networkapi.equipamento.models.Equipamento.get_by_pk(int(id_sw3)) if self.id_sw3 is int else self.id_sw3
             self.dcroom = DatacenterRoom.get_dcrooms(int(dcroom)) if self.dcroom is int else self.dcroom
             return self.save()
         except Exception, e:
@@ -388,7 +388,7 @@ class EnvironmentRack(BaseModel):
     log = logging.getLogger('EnvironmentRack')
 
     id = models.AutoField(primary_key=True, db_column='id_ambienterack')
-    ambiente = models.ForeignKey(Ambiente, db_column='id_ambiente')
+    ambiente = models.ForeignKey('ambiente.Ambiente', db_column='id_ambiente')
     rack = models.ForeignKey(Rack, db_column='id_rack')
 
     class Meta(BaseModel.Meta):
